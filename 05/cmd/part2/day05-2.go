@@ -34,10 +34,8 @@ func filterUnit(p []byte, u byte) []byte {
 }
 
 func reactPolymer(p []byte) []byte {
-	// reacted polymer
+	// Set up the reacted polymer; place the first 'unit'.
 	rp := make([]byte, 0, len(p))
-
-	// Set up the reacted polymer by placing the first 'unit'
 	rp = append(rp, p[0])
 
 	// Iterate over the polymer.
@@ -47,12 +45,10 @@ func reactPolymer(p []byte) []byte {
 			// Drop the last unit of the reacted polymer.
 			rp = rp[:len(rp)-1]
 
-			// If rp is empty, we need to jump forward.
-			if len(rp) == 0 {
-				if i+1 < len(p) {
-					rp = append(rp, p[i+1])
-					i++
-				}
+			// If rp is empty, and there are remaining units, jump forward.
+			if len(rp) == 0 && i+1 < len(p) {
+				rp = append(rp, p[i+1])
+				i++
 			}
 		} else {
 			rp = append(rp, p[i])
